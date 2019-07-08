@@ -107,7 +107,6 @@ RUN set -ex; \
         msgpack-2.0.2 \
         redis-3.1.3 \
         apcu-5.1.8 \
-        xdebug \
     ; \
     echo "\n" | pecl install ssh2-1.1.2; \
     docker-php-ext-enable --ini-name pecl.ini \
@@ -135,11 +134,7 @@ RUN set -ex; \
         lftp \
         mysql-client \
         nano \
-        nodejs \
-        openssh-server \
         rsync \
-        rubygems \
-        ruby-dev \
         screen \
         sshpass \
         ssl-cert \
@@ -154,8 +149,6 @@ RUN set -ex; \
     \
     rm -rf /tmp/pear /var/lib/apt/lists/*;
 
-# enable xdebug
-RUN docker-php-ext-enable xdebug
 
 ####################
 #
@@ -163,8 +156,6 @@ RUN docker-php-ext-enable xdebug
 #
 ####################
 ADD config/php.ini $PHP_CONFIG_DIR/php.ini
-# xdebug
-ADD config/xdebug.ini $PHP_CONFIG_DIR/conf.d/xdebug.ini
 
 ####################
 #
