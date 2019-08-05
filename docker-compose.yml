@@ -21,11 +21,11 @@ services:
   # apache php service service
   #
   web:
-    build: ./apache
+    build:
+      context: .
+      dockerfile: apache/Dockerfile
     ports:
       - "8888:80"
-    volumes:
-      - ./:/var/www/html:cached
     depends_on:
       - db
       - elasticsearch

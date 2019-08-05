@@ -3,6 +3,9 @@ FROM php:7.2-apache
 
 ENV PHP_CONFIG_DIR /usr/local/etc/php
 
+COPY . /var/www/html
+VOLUME /var/www/html
+
 ##########
 #
 # install lib packages
@@ -155,7 +158,7 @@ RUN set -ex; \
 # configure php
 #
 ####################
-ADD config/php.ini $PHP_CONFIG_DIR/php.ini
+ADD apache/config/php.ini $PHP_CONFIG_DIR/php.ini
 
 ####################
 #
@@ -164,7 +167,7 @@ ADD config/php.ini $PHP_CONFIG_DIR/php.ini
 ####################
 RUN a2dissite 000-default.conf
 # add all vhost templates and activate them via entrypoint.sh
-ADD config/vhost /etc/apache2/sites-enabled/
+ADD apache/config/vhost /etc/apache2/sites-enabled/
 
 # set permissions
 RUN chmod -R 775 /var/www/html && \
