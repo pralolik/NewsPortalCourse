@@ -11,10 +11,10 @@ parameters:
 
 fos_elastica:
     clients:
-          default: { host: localhost, port: 9200 }
+          default: { host: elasticsearch, port: 9200 }
     indexes:
         app:
-            index_name: app_%kernel.environment%
+            index_name: app
             types:
                 news:
                     properties:

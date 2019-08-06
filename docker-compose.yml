@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+
+  #
+  # mysql service
+  #
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3306:3306"
+    volumes:
+      - persistent:/var/lib/mysql
+
+  #
+  # apache php service service
+  #
+  web:
+    ports:
+      - "8888:80"
+    depends_on:
+      - db
+      - elasticsearch
+
+  mail:
+    image: schickling/mailcatcher
+    ports:
+      - 1025:1025
+      - 1080:1080
+
+  elasticsearch:
+    image: elasticsearch:5.3
+    expose:
+      - 9200
+    ports:
+      - 9200:9200
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms2096m -Xmx2096m"
+      - bootstrap.memory_lock=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+#
+# volumes
+#
+volumes:
+  persistent:
